@@ -1,8 +1,8 @@
 package track.large;
 
+import main.Ap;
+import main.Main;
 import processing.core.PMatrix;
-import track.Ap;
-import track.Main;
 import util.DrawContext;
 
 public class TLArc extends TLTrack {
@@ -37,7 +37,7 @@ public class TLArc extends TLTrack {
 	}
 
 	@Override
-	public void drawMap(DrawContext dc) {
+	public void draw(DrawContext dc) {
 		Main p = Ap.p();
 		p.scale(1000); // scale to see if setmatrix overrides this
 		/*
@@ -56,6 +56,12 @@ public class TLArc extends TLTrack {
 		
 		
 		
+	}
+
+	@Override
+	public boolean isWithinBounds(float x, float y, DrawContext dc) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 

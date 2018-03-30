@@ -1,16 +1,23 @@
 package util;
 
 public class DrawContext {
-	public float ctrDilateX;
-	public float ctrDilateY;
+
+	/**
+	 * larger = more zoom
+	 */
 	public float db;
+	/**
+	 * larger = more zoom
+	 */
+	public int scrollStage;
 	public DrawContext() {
 		
 	}
-	public DrawContext(float ctrDilateX, float ctrDilateY, float f) {
-		this.ctrDilateX = ctrDilateX;
-		this.ctrDilateY = ctrDilateY;
-		this.db = f;
+
+	public DrawContext(float db, int scrollStage) {
+
+		this.db = db;
+		this.scrollStage = scrollStage;
 	}
 
 	

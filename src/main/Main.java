@@ -1,16 +1,21 @@
-package track;
+package main;
 
 
-import static track.GameStage.*;
+import static main.GameStage.*;
+
+import static util.Transform.*;
+
+import static main.OriginMode.*;
 
 import processing.core.PApplet;
 import processing.event.MouseEvent;
+import track.TrackDrawer;
 import track.large.TLLine;
 import track.large.TLNode1;
 import track.small.TSSegment;
 import util.DrawContext;
-import util.Transform;
-public class Main extends PApplet implements Transform{
+
+public class Main extends PApplet {
 
 	public static void setMain(Main p) {
 		if (Ap.ap != null) {
@@ -21,7 +26,7 @@ public class Main extends PApplet implements Transform{
 
 	public static void main(String[] args) {
 
-		PApplet.main("track.Main");
+		PApplet.main("main.Main");
 		
 	}
 
@@ -30,21 +35,46 @@ public class Main extends PApplet implements Transform{
 		size(800,450);
 	}
 	
+	public float toMapX(float x, OriginMode fromMode) {
+		float rt = x;
+		
+		if(fromMode == DRAW_DEFAULT) {
+			
+			rt -= centerX;
+		}
+		if(fromMode != MAP_CENTER) {
+			rt -= mOriginX;
+		}
+		return rt / getContext().db;
+	}
+	public float toMapY(float y, OriginMode fromMode) {
+		float rt = y;
+		if(fromMode == DRAW_DEFAULT) {
+			rt -= centerY;
+		}
+		if(fromMode != MAP_CENTER) {
+			rt -= mOriginY;
+		}
+		return rt / getContext().db;
+	}
+
+
 
 	// Tester tester = new Tester();
 
 	public void draw() {
+		OriginMode omode = DRAW_DEFAULT;
 		background(255);
 		strokeWeight(1);
 		point(fromMouseX, fromMouseY);
 		// tester.draw();
 		
-		int centerX = this.width / 2;
-		int centerY = this.height / 2;
+		
 		
 		// the origin is at DRAW DEFAULT (UP LEFT CORNER)
 		
 		translate(centerX, centerY);
+		omode = DRAW_CENTER;
 		// the origin is at DRAW CENTERED
 		
 		pushStyle();
@@ -55,13 +85,19 @@ public class Main extends PApplet implements Transform{
 		
 		mOriginX = translateX + tlateTempX;
 		mOriginY = translateY + tlateTempY;
-		translate(centerX + mOriginX, centerY + mOriginY);
 		
-		// the origin is at MAP CENTERED
-		float db = (float)Math.pow(2, 0-scrollLen);
 		
-		DrawContext dc = new DrawContext(0, 0, db);
+		translate(mOriginX, mOriginY);
+		omode = MAP_CENTER;
+	// the origin is at MAP CENTERED
+		//float db = (float)Math.pow(2, 0-scrollLen);
 		
+		DrawContext dc = getContext();//new DrawContext(db,0-scrollLen);
+		float db = dc.db;
+//		System.out.println("--DC--");
+//		System.out.println("db "+dc.db);
+//		System.out.println("scrollStage "+dc.scrollStage);
+//		System.out.println("\\-DC--");
 		
 		fill(100,40,30);
 		// rect(0,0,10,10);
@@ -76,10 +112,10 @@ public class Main extends PApplet implements Transform{
 				stroke(0, 10);
 				textSize(db * 2);
 
-				linetf(i * 10, -100, i * 10, 100, db);
+				linetf(this, i * 10, -100, i * 10, 100, db);
 				text (i * 10, i * 10 * db, 0);
 				
-				linetf(-100, j * 10, 100, j * 10, db);
+				linetf(this, -100, j * 10, 100, j * 10, db);
 				text(j * 10, 0, j * 10 * db);
 				popStyle();
 			}
@@ -104,9 +140,18 @@ public class Main extends PApplet implements Transform{
 		// if there are nodes with the same y then work left to right (increase x)
 		
 		
+		td.drawLargeTracks(dc);
 		
 	}
-
+	public DrawContext getContext() {
+		float db = (float)Math.pow(2, 0-scrollLen);
+		
+		return  new DrawContext(db,0-scrollLen);
+	}
+	TrackDrawer td = new TrackDrawer();
+	float centerX;
+	float centerY;
+	
 	public void setup() {
 		if(Ap.p() == null) System.out.println("nullapp");
 		
@@ -114,7 +159,11 @@ public class Main extends PApplet implements Transform{
 		b = new TLNode1(10,20);
 		// seg = new TSSegment(new Pos(10, 10), new Pos(10,20));
 		// seg.setup(new DrawContext());
-		large = new TLLine(a, b);
+		large = (TLLine) new TLLine(a, b).autoAttach();
+		td.registerTLNodes(a);
+		td.registerTLNodes(b);
+		centerX = this.width/ 2;
+		centerY = this.height / 2;
 	}
 	int drawOriginX, drawOriginY, mOriginX, mOriginY; // map origin x/y
 	int translateX, translateY, tlateTempX, tlateTempY, scrollLen, fromMouseX, fromMouseY; 
@@ -124,13 +173,23 @@ public class Main extends PApplet implements Transform{
 	TSSegment seg;// = new TSegment();
 	TLNode1 a, b;
 	TLLine large;
+	
+	
 	public void mousePressed() {
 		if(stage == WORLDMAP) {
 			
 			fromMouseX = mouseX;
 			fromMouseY = mouseY;
+			DrawContext dc = getContext();
+			float mMouseX =  toMapX(mouseX, OriginMode.DRAW_DEFAULT);
+			float mMouseY =  toMapY(mouseY, OriginMode.DRAW_DEFAULT);
 			
-
+			// recttf(this, mMouseX, mMouseY, 1, 1, dc.db);
+			
+			System.out.println("mMouseX " + mMouseX);
+			System.out.println("mMouseY " + mMouseY);
+			System.out.println("large: "+large.isWithinBounds(mMouseX, mMouseY, dc));
+			
 		}
 	}
 	public void mouseDragged(MouseEvent e) {
@@ -156,10 +215,11 @@ public class Main extends PApplet implements Transform{
 
 		int i = e.getCount(); // 1 or -1
 		scrollLen += i;
-		scrollLen = 
+		scrollLen = /*
 			scrollLen < -3 ? -3 :
-			scrollLen > 3 ? 3 : scrollLen;
-		System.out.println(scrollLen);
+			scrollLen > 3 ? 3 : scrollLen;*/
+				constrain(scrollLen, -3, 3);
+		
 		
 	}
 	public GameStage stage = WORLDMAP;

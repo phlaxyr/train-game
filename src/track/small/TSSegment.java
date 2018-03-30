@@ -1,9 +1,9 @@
 package track.small;
 
+import main.Ap;
+import main.Main;
 import processing.core.PApplet;
 import render.Element;
-import track.Ap;
-import track.Main;
 import track.Pos;
 import util.DrawContext;
 
@@ -28,7 +28,7 @@ public class TSSegment extends Element{
 		p.strokeWeight(0.1F);
 		p.pushStyle();
 			p.fill(0xFF4E2D04);
-			p.linetf(start.x, start.y,end.x, end.y, dc.db);
+			util.Transform.linetf(p,start.x, start.y,end.x, end.y, dc.db);
 		p.popStyle();
 		// System.out.println(start.drawX() + " " +  start.drawY() + " " + end.drawX() + " " +  end.drawY());
 		// Ap.p().line(10,10,10,20);

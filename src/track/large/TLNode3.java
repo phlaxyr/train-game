@@ -1,18 +1,46 @@
 package track.large;
 
-public class TLNode3 implements TLNode{
-
-	@Override
-	public float x() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public float y() {
-		// TODO Auto-generated method stub
-		return 0;
+public class TLNode3 extends TLNodeAbstract{
+	
+	private TLLine higher, lower;
+	private TLArc arc;
+	public TLNode3(float x, float y) {
+		super(x, y, 3);
+		
 	}
 	
+	
+	
+
+	
+	public void setHigher(TLLine t) {
+		higher = t;
+		set(t, 0);
+	}
+	
+	public void setLower(TLLine t) {
+		lower = t;
+		set(t, 1);
+	}
+	public void setArc(TLArc t) {
+		arc = t;
+		set(t, 2);
+	}
+
+
+
+
+
+	public TLLine getHigher() {
+		return higher;
+	}
+
+	public TLLine getLower() {
+		return lower;
+	}
+
+	public TLArc getArc() {
+		return arc;
+	}
 
 }

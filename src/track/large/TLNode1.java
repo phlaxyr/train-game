@@ -1,22 +1,20 @@
 package track.large;
 
-public class TLNode1 extends TLNodeAbstract implements TLNodeIndexed{
+public class TLNode1 extends TLNodeAbstract{
 
-	TLTrack t;
+	
 	public TLNode1(float x, float y) {
-		super(x, y);
+		super(x, y, 1);
 		
 	}
-	public void attachTrack(TLTrack t, int i) {
-		if(i != 0) throw new IllegalArgumentException("index must be 0");
-		this.t = t;
-	}
-	public TLTrack getTrack(int i) {
-		if(i != 0) throw new IllegalArgumentException("index must be 0");
-		return t;
-	}
+
 	public TLTrack track1() {
-		return t;
+		return all.get(0);
 	}
+	public void set1(TLTrack t) {
+		
+		set(t, 0);
+	}
+	
 
 }
