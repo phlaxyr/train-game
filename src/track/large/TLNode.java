@@ -2,7 +2,10 @@ package track.large;
 
 import java.util.List;
 
-import util.DrawContext;
+import main.Ap;
+import main.DrawContext;
+import main.Main;
+import processing.core.PConstants;
 
 public interface TLNode {
 	
@@ -44,5 +47,16 @@ public interface TLNode {
 	
 	public void attach(TLTrack t);
 	
-	public void draw(DrawContext dc);
+	
+	public default void draw(DrawContext dc) {
+		Main p = Ap.p();
+		p.pushStyle();
+//		p.fill(0, 255, 0);
+//		p.stroke(0, 128, 0);
+		
+		p.strokeWeight(0.5F * dc.tc.db);
+		p.ellipseMode(PConstants.CENTER);
+		util.Transform.circletf(Ap.p(), x(), y(), 0.5F, 0.5F, dc.tc);
+		p.popStyle();
+	}
 }

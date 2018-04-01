@@ -5,7 +5,7 @@ import main.Main;
 import processing.core.PApplet;
 import render.Element;
 import track.Pos;
-import util.DrawContext;
+import util.TransformContext;
 
 public class TSSegment extends Element{
 	
@@ -16,11 +16,11 @@ public class TSSegment extends Element{
 		this.end = end;
 	}
 	@Override
-	public void setup(DrawContext dc) {
+	public void setup(TransformContext dc) {
 		 // img = Ap.p().loadImage("art.png");
 	}
 	@Override
-	public void drawMap(DrawContext dc) {
+	public void drawMap(TransformContext dc) {
 		Main p = Ap.p();
 		p.fill(0,0,0);
 		
@@ -28,7 +28,7 @@ public class TSSegment extends Element{
 		p.strokeWeight(0.1F);
 		p.pushStyle();
 			p.fill(0xFF4E2D04);
-			util.Transform.linetf(p,start.x, start.y,end.x, end.y, dc.db);
+			util.Transform.linetf(p,start.x, start.y,end.x, end.y, dc);
 		p.popStyle();
 		// System.out.println(start.drawX() + " " +  start.drawY() + " " + end.drawX() + " " +  end.drawY());
 		// Ap.p().line(10,10,10,20);

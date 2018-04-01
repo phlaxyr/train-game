@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.Ap;
+import main.DrawContext;
 import main.Main;
-import processing.core.PConstants;
-import util.DrawContext;
 
 
+/**
+ * Actually functions as sort of a multinode, as if you set over the limit, the array automatically resizes
+ * @author Owner
+ *
+ */
 public abstract class TLNodeAbstract implements TLNode{
 	private float pvx, pvy;
 	protected List<TLTrack> higher = new ArrayList<>();
@@ -34,6 +38,7 @@ public abstract class TLNodeAbstract implements TLNode{
 	
 	/**
 	 * Must be called whenever something is set
+	 * if the index doesn't exist, then it acts as an arraylist
 	 * @param t
 	 * @param i
 	 */
@@ -69,18 +74,7 @@ public abstract class TLNodeAbstract implements TLNode{
 
 	}
 	
-	@Override
-	public void draw(DrawContext dc) {
-		Main p = Ap.p();
-		p.pushStyle();
-		p.fill(0, 255, 0);
-		p.stroke(0, 128, 0);
-		
-		p.strokeWeight(0.5F * dc.db);
-		p.ellipseMode(PConstants.CENTER);
-		util.Transform.circletf(Ap.p(), x(), y(), 0.5F, 0.5F, dc.db);
-		p.popStyle();
-	}
+
 	
 	int currentindex = 0;
 	public void attach(TLTrack t) {
@@ -91,7 +85,14 @@ public abstract class TLNodeAbstract implements TLNode{
 	
 	public List<TLTrack> higher() {return higher;}
 	public List<TLTrack> lower() {return lower;}
-	
-	
+	@Override
+	public void draw(DrawContext dc) {
+		Main p = Ap.p();
+		p.pushStyle();
+			p.fill(0, 255, 0);
+			p.stroke(0, 128, 0);
+			TLNode.super.draw(dc);
+		p.popStyle();
+	}
 	
 }

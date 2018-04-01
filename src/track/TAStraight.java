@@ -1,53 +1,16 @@
-package track.large;
+package track;
 
-import main.Ap;
 import main.DrawContext;
-import main.Main;
-import track.TAStraight;
+import track.large.TLTrack;
 
-public class TLLine implements TAStraight{
-	
-	public float dx, dy;
-	TLNode from, to;
-	public TLLine(TLNode from, TLNode to) {
-		this.from = from;
-		this.to= to;
-		dx = from.x() - to.x();
-		dy = from.y() - to.y();
-
-		
-	}
-	@Override
-	public void draw(DrawContext dc) {
-		Main p = Ap.p();
-		p.fill(0,0,0);
-		
-		p.stroke(0);
-		if(dc.scrollStage >= 2) {
-			p.strokeWeight(0.5F * dc.tc.db);
-		} else {
-			p.strokeWeight(0.75F * dc.tc.db);
-		}
-		p.pushStyle();
-			p.fill(0xFF4E2D04);
-			
-			util.Transform.linetf(p,from.x(), from.y(),to.x(), to.y(), dc.tc);
-			
-		p.popStyle();
-		// System.out.println(start.drawX() + " " +  start.drawY() + " " + end.drawX() + " " +  end.drawY());
-		// Ap.p().line(10,10,10,20);
-		
-		
-	}
-	
-	@Override
-	public boolean isWithinBounds(float x, float y, DrawContext dc) {
+public interface TAStraight extends TLTrack{
+	public default boolean isWithinBounds(float x, float y, DrawContext dc) {
 		float tolerance = dc.scrollStage / 3;
-		System.out.println( this.dist2_line_pt(from.x(), from.y(), to.x(), to.y(), x, y));
-		return dist2_line_pt(from.x(), from.y(), to.x(), to.y(), x, y) < tolerance * tolerance;
+		System.out.println( dist2_line_pt(from().x(), from().y(), to().x(), to().y(), x, y));
+		return dist2_line_pt(from().x(), from().y(), to().x(), to().y(), x, y) < square(tolerance);
 	}
-	/*
-	float dist2_line_pt(float vx, float vy, float wx, float wy, float px, float py) {
+
+	public default float dist2_line_pt(float vx, float vy, float wx, float wy, float px, float py) {
 		// tak'd from https://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment  
 		
 		// Return minimum distance between line segment vw and point p
@@ -78,23 +41,13 @@ public class TLLine implements TAStraight{
 		  
 		  return dist2(px, py, pjx, pjy);
 		}
-	float dist2(float ax,float ay,float bx,float by) {
+	public static float dist2(float ax,float ay,float bx,float by) {
 		return Math.abs(square(ax - bx) + square(ay - by));
 	}
-	float square(float x) {
+	public static float square(float x) {
 		return x * x;
 	}
-	float dot(float ax, float ay, float bx, float by) {
+	public static float dot(float ax, float ay, float bx, float by) {
 		 return ax * bx + ay * by;
-	}*/
-	@Override
-	public TLNode from() {
-		return from;
 	}
-	@Override
-	public TLNode to() {
-		return to;
-	}
-	
-	
 }

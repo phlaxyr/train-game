@@ -1,9 +1,12 @@
 package track.large;
 
-import track.PObjectSelectable;
-import util.DrawContext;
+import main.DrawContext;
 
-public abstract class TLTrack implements PObjectSelectable{
+import track.PObjectSelectable;
+
+
+public interface TLTrack extends PObjectSelectable{
+	/*
 	public TLNode from, to;
 	
 	public TLTrack(TLNode from, TLNode to) {
@@ -15,15 +18,17 @@ public abstract class TLTrack implements PObjectSelectable{
 		
 		// auto set
 		
-	}
+	}*/
+	public TLNode from();
+	public TLNode to();
 	/**
 	 * Use carefully; for instance, if the index is important, then be sure of the order.
 	 * From is attached before to.
 	 * Returns this for chaining.
 	 */
-	public TLTrack autoAttach() {
-		from.attach(this);
-		to.attach(this);
+	public default TLTrack autoAttach() {
+		from().attach(this);
+		to().attach(this);
 		return this;
 	}
 	
@@ -33,9 +38,9 @@ public abstract class TLTrack implements PObjectSelectable{
 	@Override
 	public abstract boolean isWithinBounds(float x, float y, DrawContext dc);
 	
-	public TLNode otherNode(TLNode n) {
-		if(from.equals(n)) return to;
-		if(to.equals(n)) return from;
+	public default TLNode otherNode(TLNode n) {
+		if(from().equals(n)) return to();
+		if(to().equals(n)) return from();
 		throw new IllegalArgumentException("That TLNode is not attached to this TLTrack "
 				+ "(perhaps you have 2 nodes in the same spot?)");
 	}

@@ -1,6 +1,7 @@
 package track;
 
-import util.DrawContext;
+import main.DrawContext;
+
 
 public interface PObject {
 	public void draw(DrawContext dc);

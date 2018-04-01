@@ -1,23 +1,24 @@
 package track.large;
 
 import main.Ap;
+import main.DrawContext;
 import main.Main;
 import processing.core.PMatrix;
-import util.DrawContext;
 
-public class TLArc extends TLTrack {
+
+public class TLArc implements TLTrack {
 	
 
 	public final double anglefrom;
 	public final float todx, tody;
 	public PMatrix mx;
 	
-	
+	TLNode from, to;
 	
 	public TLArc(TLNode from, TLNode to, float fromdx, float fromdy, float todx, float tody) {
 		
 		// double from_perp = -fromdx / fromdy;
-		super(from, to);
+		
 		// angle of the `from` line
 		anglefrom = Math.atan(fromdy/fromdx);
 		this.todx = todx;
@@ -62,6 +63,16 @@ public class TLArc extends TLTrack {
 	public boolean isWithinBounds(float x, float y, DrawContext dc) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public TLNode from() {
+		return from;
+	}
+
+	@Override
+	public TLNode to() {
+		return to;
 	}
 
 
