@@ -4,10 +4,15 @@ import main.DrawContext;
 import track.large.TLTrack;
 
 public interface TAStraight extends TLTrack{
+	@Override
 	public default boolean isWithinBounds(float x, float y, DrawContext dc) {
-		float tolerance = dc.scrollStage / 3;
+		
 		System.out.println( dist2_line_pt(from().x(), from().y(), to().x(), to().y(), x, y));
-		return dist2_line_pt(from().x(), from().y(), to().x(), to().y(), x, y) < square(tolerance);
+		return dist2_line_pt(from().x(), from().y(), to().x(), to().y(), x, y) < square(tolerance(dc));
+	}
+	@Override
+	public default float tolerance(DrawContext dc) {
+		return dc.scrollStage / 3;
 	}
 
 	public default float dist2_line_pt(float vx, float vy, float wx, float wy, float px, float py) {

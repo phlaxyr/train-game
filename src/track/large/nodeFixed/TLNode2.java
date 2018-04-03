@@ -1,11 +1,13 @@
-package track.large;
+package track.large.nodeFixed;
+
+import track.large.TLTrack;
 
 /**
  * Simply connects 2 tracks
  * 
  *
  */
-public class TLNode2 extends TLNodeAbstract{
+public class TLNode2 extends TLNodeFixed{
 	public TLNode2(float x, float y) {
 		super(x, y, 2);
 		

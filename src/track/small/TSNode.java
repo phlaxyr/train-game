@@ -31,5 +31,11 @@ public class TSNode implements ITSNode {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	@Override
+	public float tolerance(DrawContext dc) {
+		return 0;
+	}
 	
 }

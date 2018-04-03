@@ -37,15 +37,10 @@ public class TLLine implements TAStraight{
 		// System.out.println(start.drawX() + " " +  start.drawY() + " " + end.drawX() + " " +  end.drawY());
 		// Ap.p().line(10,10,10,20);
 		
-		
+		register(Ap.p().td);
 	}
 	
-	@Override
-	public boolean isWithinBounds(float x, float y, DrawContext dc) {
-		float tolerance = dc.scrollStage / 3;
-		System.out.println( this.dist2_line_pt(from.x(), from.y(), to.x(), to.y(), x, y));
-		return dist2_line_pt(from.x(), from.y(), to.x(), to.y(), x, y) < tolerance * tolerance;
-	}
+
 	/*
 	float dist2_line_pt(float vx, float vy, float wx, float wy, float px, float py) {
 		// tak'd from https://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment  

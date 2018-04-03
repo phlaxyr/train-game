@@ -1,10 +1,8 @@
-package track.large;
+package track.large.nodeFixed;
 
-import main.Ap;
-import main.DrawContext;
-import main.Main;
+import track.large.TLTrack;
 
-public class TLNode1 extends TLNodeAbstract{
+public class TLNode1 extends TLNodeFixed{
 
 	
 	public TLNode1(float x, float y) {

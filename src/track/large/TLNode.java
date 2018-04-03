@@ -6,16 +6,29 @@ import main.Ap;
 import main.DrawContext;
 import main.Main;
 import processing.core.PConstants;
+import track.PObjectSelectable;
+import track.TrackManager;
 
-public interface TLNode {
+public interface TLNode extends PObjectSelectable{
 	
 	
 	public float x();
 	public float y();
 	public List<TLTrack> higher();
 	public List<TLTrack> lower();
+	public List<TLTrack> all();
 	
-
+	public default void register(TrackManager d) {
+		int s = d.largeNodes.size();
+		if(s != 0) {
+			TLNode before = d.largeNodes.get(s - 1);
+			if(before.isLowerThan(this)) {
+				throw new IllegalArgumentException("You must instantiate TLNodes in order!");
+			}
+		}
+		d.largeNodes.add(this);
+		
+	}
 	
 	// the implementation for attaching the tracks will be up to subclasses
 	
@@ -46,7 +59,7 @@ public interface TLNode {
 	}
 	
 	public void attach(TLTrack t);
-	
+	public void detach(TLTrack t);
 	
 	public default void draw(DrawContext dc) {
 		Main p = Ap.p();
@@ -56,7 +69,10 @@ public interface TLNode {
 		
 		p.strokeWeight(0.5F * dc.tc.db);
 		p.ellipseMode(PConstants.CENTER);
-		util.Transform.circletf(Ap.p(), x(), y(), 0.5F, 0.5F, dc.tc);
+		util.Transform.circletf(Ap.p(), x(), y(), radius(), radius(), dc.tc);
 		p.popStyle();
+	}
+	public default float radius() {
+		return 0.5F;
 	}
 }

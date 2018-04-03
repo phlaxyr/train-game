@@ -1,6 +1,9 @@
-package track.large;
+package track.large.nodeFixed;
 
-public class TLNode3 extends TLNodeAbstract{
+import track.large.TLArc;
+import track.large.TLLine;
+
+public class TLNode3 extends TLNodeFixed{
 	
 	private TLLine higher, lower;
 	private TLArc arc;

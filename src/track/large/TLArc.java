@@ -9,31 +9,33 @@ import processing.core.PMatrix;
 public class TLArc implements TLTrack {
 	
 
-	public final double anglefrom;
-	public final float todx, tody;
+	public double anglefrom;
+	public float todx, tody = 0;
+	public float centerx, centery, radius = 0; // TODO
+	
 	public PMatrix mx;
 	
 	TLNode from, to;
 	
-	public TLArc(TLNode from, TLNode to, float fromdx, float fromdy, float todx, float tody) {
+	public TLArc(TLNode from, TLNode to) {
 		
 		// double from_perp = -fromdx / fromdy;
 		
 		// angle of the `from` line
-		anglefrom = Math.atan(fromdy/fromdx);
-		this.todx = todx;
-		this.tody = tody;
+//		anglefrom = Math.atan(fromdy/fromdx);
+//		this.todx = todx;
+//		this.tody = tody;
 		// if the slope is negative, then it will be counterclockwise; correct
 		// if the slope is positive, then it will be clockwise; correct
 		Main p = Ap.p();
 		p.pushMatrix();
 			p.translate(from.x(), from.y()); // rebase the origin to `from`
-			p.rotate((float) anglefrom); // rotate by the angle of `from`
+			// p.rotate((float) anglefrom); // rotate by the angle of `from`
 			mx = Ap.p().getMatrix();
 		p.popMatrix();
 		// slopes
 		// f(x) = b + m (x - a), where (a,b) is the location of the point, m is slope
-		
+		register(Ap.p().td);
 		
 	}
 
@@ -58,13 +60,17 @@ public class TLArc implements TLTrack {
 		
 		
 	}
-
+	
+	
 	@Override
 	public boolean isWithinBounds(float x, float y, DrawContext dc) {
-		// TODO Auto-generated method stub
-		return false;
+		float d2pt_to_center = square(x-centerx)+square(y-centery);
+		float d2min = square(radius - tolerance(dc));
+		float d2max = square(radius + tolerance(dc));
+		
+		return d2min < d2pt_to_center && d2pt_to_center < d2max;
 	}
-
+	private float square(float in) {return in*in;}
 	@Override
 	public TLNode from() {
 		return from;
@@ -73,6 +79,12 @@ public class TLArc implements TLTrack {
 	@Override
 	public TLNode to() {
 		return to;
+	}
+
+	@Override
+	public float tolerance(DrawContext dc) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

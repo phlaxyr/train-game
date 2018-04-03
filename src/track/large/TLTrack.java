@@ -1,8 +1,8 @@
 package track.large;
 
 import main.DrawContext;
-
 import track.PObjectSelectable;
+import track.TrackManager;
 
 
 public interface TLTrack extends PObjectSelectable{
@@ -43,6 +43,10 @@ public interface TLTrack extends PObjectSelectable{
 		if(to().equals(n)) return from();
 		throw new IllegalArgumentException("That TLNode is not attached to this TLTrack "
 				+ "(perhaps you have 2 nodes in the same spot?)");
+	}
+	public default void register(TrackManager m) {
+		m.largeTracks.add(this);
+
 	}
 	
 }

@@ -2,9 +2,10 @@ package track.large;
 
 public class TLStation extends TLMultiNode{
 
-	public TLStation(float x, float y) {
+	String name;
+	public TLStation(float x, float y, String name) {
 		super(x, y);
-		// TODO Auto-generated constructor stub
+		this.name = name;
 	}
 
 }
