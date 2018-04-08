@@ -1,52 +1,25 @@
 package track.large;
 
-import main.DrawContext;
 import track.PObjectSelectable;
-import track.TrackManager;
 
-
+/**
+ * Connects a and b
+ * 
+ *
+ */
 public interface TLTrack extends PObjectSelectable{
-	/*
-	public TLNode from, to;
+	public TLNode a();
+	public TLNode b();
 	
-	public TLTrack(TLNode from, TLNode to) {
-		
-		this.from = from;
-		
-		
-		this.to = to;
-		
-		// auto set
-		
-	}*/
-	public TLNode from();
-	public TLNode to();
-	/**
-	 * Use carefully; for instance, if the index is important, then be sure of the order.
-	 * From is attached before to.
-	 * Returns this for chaining.
-	 */
-	public default TLTrack autoAttach() {
-		from().attach(this);
-		to().attach(this);
-		return this;
-	}
-	
-	@Override
-	public abstract void draw(DrawContext dc);
-	
-	@Override
-	public abstract boolean isWithinBounds(float x, float y, DrawContext dc);
+	public TLTrack autoAttach();
 	
 	public default TLNode otherNode(TLNode n) {
-		if(from().equals(n)) return to();
-		if(to().equals(n)) return from();
+		if(a().equals(n)) return b();
+		if(b().equals(n)) return a();
 		throw new IllegalArgumentException("That TLNode is not attached to this TLTrack "
 				+ "(perhaps you have 2 nodes in the same spot?)");
 	}
-	public default void register(TrackManager m) {
-		m.largeTracks.add(this);
-
-	}
+	
+	
 	
 }

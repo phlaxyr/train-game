@@ -6,7 +6,7 @@ import main.Main;
 import processing.core.PMatrix;
 
 
-public class TLArc implements TLTrack {
+public class TLArc implements TLTrack1 {
 	
 
 	public double anglefrom;
@@ -35,7 +35,7 @@ public class TLArc implements TLTrack {
 		p.popMatrix();
 		// slopes
 		// f(x) = b + m (x - a), where (a,b) is the location of the point, m is slope
-		register(Ap.p().td);
+//		register(Ap.p().td);
 		
 	}
 
@@ -72,12 +72,12 @@ public class TLArc implements TLTrack {
 	}
 	private float square(float in) {return in*in;}
 	@Override
-	public TLNode from() {
+	public TLNode a() {
 		return from;
 	}
 
 	@Override
-	public TLNode to() {
+	public TLNode b() {
 		return to;
 	}
 

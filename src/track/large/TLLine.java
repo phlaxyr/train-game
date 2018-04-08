@@ -37,7 +37,7 @@ public class TLLine implements TAStraight{
 		// System.out.println(start.drawX() + " " +  start.drawY() + " " + end.drawX() + " " +  end.drawY());
 		// Ap.p().line(10,10,10,20);
 		
-		register(Ap.p().td);
+//		register(Ap.p().td);
 	}
 	
 
@@ -83,11 +83,11 @@ public class TLLine implements TAStraight{
 		 return ax * bx + ay * by;
 	}*/
 	@Override
-	public TLNode from() {
+	public TLNode a() {
 		return from;
 	}
 	@Override
-	public TLNode to() {
+	public TLNode b() {
 		return to;
 	}
 	

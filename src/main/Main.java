@@ -25,7 +25,7 @@ public class Main extends PApplet {
 	}
 
 	public static void main(String[] args) {
-
+		
 		PApplet.main("main.Main");
 		
 	}
@@ -41,6 +41,7 @@ public class Main extends PApplet {
 	// Tester tester = new Tester();
 
 	public void draw() {
+
 		@SuppressWarnings("unused")
 		OriginMode omode = DRAW_DEFAULT;
 		background(255);
@@ -119,7 +120,7 @@ public class Main extends PApplet {
 		// start at the leftest, uppermost node and work down (increase y)
 		// if there are nodes with the same y then work left to right (increase x)
 		
-		
+
 		td.drawLargeTracks(dc);
 		
 	}
@@ -136,6 +137,7 @@ public class Main extends PApplet {
 	float centerY;
 	
 	public void setup() {
+		
 		if(Ap.p() == null) System.out.println("nullapp");
 		
 		td.setupLarge();

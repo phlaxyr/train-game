@@ -15,17 +15,20 @@ public class TLMultiNode extends TLNodeAbstract{
 		addToHigherLower(t);
 	}
 
+
 	@Override
 	public float tolerance(DrawContext dc) {
 		return 0;
 	}
+
+
 	@Override
 	public void detach(TLTrack t) {
 		all.remove(t);
 		higher.remove(t);
+		
 		lower.remove(t);
 	}
-
 	
 
 

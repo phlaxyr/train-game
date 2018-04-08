@@ -1,17 +1,21 @@
 package track.large.nodeFixed;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import main.DrawContext;
 import track.large.TLNodeAbstract;
 import track.large.TLTrack;
+import track.large.TLTrack1;
 
 public class TLNodeFixed extends TLNodeAbstract{
 	public final int size;
+
 	public TLNodeFixed(float x, float y, int size) {
 		super(x, y);
 		this.size = size;
-		all = Arrays.asList(new TLTrack[size]);
+		all = new ArrayList<TLTrack>(Collections.nCopies(size, null));
 	}
 	/**
 	 * Must be called whenever something is set
@@ -44,13 +48,6 @@ public class TLNodeFixed extends TLNodeAbstract{
 //		
 //			
 //		}
-		
-
-		
-
-
-		
-
 	}
 	
 
@@ -59,13 +56,14 @@ public class TLNodeFixed extends TLNodeAbstract{
 	public void attach(TLTrack t) {
 		set(t, currentindex++);
 	}
+
 	@Override
 	public float tolerance(DrawContext dc) {
 		return 0;
 	}
+	
 	@Override
 	public void detach(TLTrack t) {
-		
 		for(int i=0;i<all.size();i++) {
 			TLTrack it = all.get(i);
 			if(it != null && it.equals(t)) {
@@ -75,6 +73,6 @@ public class TLNodeFixed extends TLNodeAbstract{
 		higher.remove(t);
 		lower.remove(t);
 	}
-
+	
 	
 }

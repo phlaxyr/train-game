@@ -18,13 +18,15 @@ public abstract class TLNodeAbstract implements TLNode{
 	private float pvx, pvy;
 	protected List<TLTrack> higher = new ArrayList<>();
 	protected List<TLTrack> lower = new ArrayList<>();
+	protected List<TLTrack1> outwards = new ArrayList<>();
+	protected List<TLTrack1> inwards = new ArrayList<>();
  	protected List<TLTrack> all;
  	
 	protected TLNodeAbstract(float x, float y, ArrayList<TLTrack> list) {
 		this.pvx = x;
 		this.pvy = y;
  		all = list;
- 		register(Ap.p().td);
+
 	}
 	public TLNodeAbstract(float x, float y) {
 		this(x, y, new ArrayList<>());
@@ -46,7 +48,19 @@ public abstract class TLNodeAbstract implements TLNode{
 		}
 		else lower.add(t);
 	}
+	protected void addToOutwardsInwards(TLTrack1 t) {
+		if(t.from().equals(this)) {
+			outwards.add(t);
+		} else if(t.to().equals(this)) {
+			inwards.add(t);
+		} else {
+			throw new IllegalArgumentException("None of TLTrack's nodes  is me");
+		}
+	}
+	
 
+	
+	
 	@Override
 	public boolean isWithinBounds(float x, float y, DrawContext dc) {
 		float d2pt = square(x-pvx)+square(y-pvy);
@@ -56,10 +70,17 @@ public abstract class TLNodeAbstract implements TLNode{
 		return in * in;
 	}
 	
-	
+	@Override
 	public List<TLTrack> higher() {return higher;}
+	@Override
 	public List<TLTrack> lower() {return lower;}
+	@Override
 	public List<TLTrack> all() {return all;}
+	@Override
+	public List<TLTrack1> outwards() {return outwards;}
+	@Override
+	public List<TLTrack1> inwards() {return inwards;}
+	
 	@Override
 	public void draw(DrawContext dc) {
 		Main p = Ap.p();
@@ -69,5 +90,31 @@ public abstract class TLNodeAbstract implements TLNode{
 			TLNode.super.draw(dc);
 		p.popStyle();
 	}
+	public void attach1(TLTrack1 t) {
+		this.attach(t);
+		addToOutwardsInwards(t);
+	}
+	@Override
+	public void detach1(TLTrack1 t) {
+		detach(t);
+		outwards.remove(t);
+		inwards.remove(t);
+	}
+
+	public void attach2(TLTrack2 t) {
+		this.attach(t);
+		addToOutwardsInwards(t.ab());
+		addToOutwardsInwards(t.ba());
+	}
+	@Override
+	public void detach2(TLTrack2 t) {
+		detach(t);
+		// who cares about time complexity
+		outwards.remove(t.ab());
+		outwards.remove(t.ba());
+		inwards.remove(t.ab());
+		inwards.remove(t.ba());
+	}
+	
 
 }

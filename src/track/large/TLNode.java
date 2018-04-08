@@ -7,7 +7,6 @@ import main.DrawContext;
 import main.Main;
 import processing.core.PConstants;
 import track.PObjectSelectable;
-import track.TrackManager;
 
 public interface TLNode extends PObjectSelectable{
 	
@@ -16,19 +15,20 @@ public interface TLNode extends PObjectSelectable{
 	public float y();
 	public List<TLTrack> higher();
 	public List<TLTrack> lower();
+	
+	// these ones MUST be directional
+	public List<TLTrack1> outwards();
+	public List<TLTrack1> inwards();
+	
+	/**
+	 * A list of connections
+	 * A 2-way highway would count as 1 connection
+	 * @return
+	 */
 	public List<TLTrack> all();
 	
-	public default void register(TrackManager d) {
-		int s = d.largeNodes.size();
-		if(s != 0) {
-			TLNode before = d.largeNodes.get(s - 1);
-			if(before.isLowerThan(this)) {
-				throw new IllegalArgumentException("You must instantiate TLNodes in order!");
-			}
-		}
-		d.largeNodes.add(this);
-		
-	}
+	
+
 	
 	// the implementation for attaching the tracks will be up to subclasses
 	
@@ -58,9 +58,19 @@ public interface TLNode extends PObjectSelectable{
 		
 	}
 	
-	public void attach(TLTrack t);
+	/**
+	 * This should not handle outwards inwards
+	 * @param t
+	 */
+	public void attach(TLTrack t); // this should not handle outwards inwards
+	
+	public void attach1(TLTrack1 t);
+	public void attach2(TLTrack2 t);
+	
 	public void detach(TLTrack t);
 	
+	public void detach1(TLTrack1 t);
+	public void detach2(TLTrack2 t);
 	public default void draw(DrawContext dc) {
 		Main p = Ap.p();
 		p.pushStyle();
