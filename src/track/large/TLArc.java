@@ -93,6 +93,12 @@ public class TLArc implements TLTrack1 {
 		
 	}
 
+	@Override
+	public float distance() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 	
 

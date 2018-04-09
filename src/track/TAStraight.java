@@ -1,6 +1,7 @@
 package track;
 
 import main.DrawContext;
+import processing.core.PApplet;
 import track.large.TLTrack1;
 
 public interface TAStraight extends TLTrack1{
@@ -16,6 +17,11 @@ public interface TAStraight extends TLTrack1{
 		return 1.5F;
 	}
 
+	@Override
+	public default float distance() {
+		return PApplet.dist(a().x(), a().y(), b().x(), b().y());
+	}
+	
 	public default float dist2_line_pt(float vx, float vy, float wx, float wy, float px, float py) {
 		// tak'd from https://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment  
 		

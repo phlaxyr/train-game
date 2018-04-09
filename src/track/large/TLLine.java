@@ -106,4 +106,5 @@ public class TLLine implements TAStraight{
 	}
 	
 	
+	
 }

@@ -34,5 +34,10 @@ public class TLLine2 extends TLTrack2Abstract<TLLine>{
 		ab.drawSelectionHalo(dc);
 	}
 
+	@Override
+	public float distance() {
+		return ab().distance();
+	}
+
 	
 }
