@@ -6,6 +6,7 @@ import main.Ap;
 import main.DrawContext;
 import main.Main;
 import processing.core.PConstants;
+import track.PObjectClickable;
 import track.PObjectSelectable;
 
 public interface TLNode extends PObjectSelectable{
@@ -71,16 +72,36 @@ public interface TLNode extends PObjectSelectable{
 	
 	public void detach1(TLTrack1 t);
 	public void detach2(TLTrack2 t);
+	public default void styleNode(DrawContext dc) {
+		Main p = Ap.p();
+		p.fill(0, 255, 0);
+		p.stroke(0, 128, 0);
+		p.strokeWeight(0.5F * dc.tc.db);
+	}
+	public default void styleHalo(DrawContext dc) {
+		Main p = Ap.p();
+		p.noStroke();
+		p.fill(255, 255, 0);
+	}
 	public default void draw(DrawContext dc) {
 		Main p = Ap.p();
 		p.pushStyle();
 //		p.fill(0, 255, 0);
 //		p.stroke(0, 128, 0);
-		
-		p.strokeWeight(0.5F * dc.tc.db);
+		styleNode(dc);
+
 		p.ellipseMode(PConstants.CENTER);
 		util.Transform.circletf(Ap.p(), x(), y(), radius(), radius(), dc.tc);
 		p.popStyle();
+	}
+	@Override
+	public default void drawSelectionHalo(DrawContext dc) {
+		Main p = Ap.p();
+		p.pushStyle();
+		styleHalo(dc);
+		util.Transform.circletf(Ap.p(), x(), y(), radius() * 4F, radius() * 4F, dc.tc);
+		p.popStyle();
+		
 	}
 	public default float radius() {
 		return 0.5F;

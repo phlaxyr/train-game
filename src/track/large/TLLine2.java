@@ -29,5 +29,10 @@ public class TLLine2 extends TLTrack2Abstract<TLLine>{
 		ab().draw(dc);
 	}
 
+	@Override
+	public void drawSelectionHalo(DrawContext dc) {
+		ab.drawSelectionHalo(dc);
+	}
+
 	
 }

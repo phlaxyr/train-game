@@ -81,15 +81,15 @@ public abstract class TLNodeAbstract implements TLNode{
 	@Override
 	public List<TLTrack1> inwards() {return inwards;}
 	
-	@Override
-	public void draw(DrawContext dc) {
-		Main p = Ap.p();
-		p.pushStyle();
-			p.fill(0, 255, 0);
-			p.stroke(0, 128, 0);
-			TLNode.super.draw(dc);
-		p.popStyle();
-	}
+//	@Override
+//	public void draw(DrawContext dc) {
+//		Main p = Ap.p();
+//		p.pushStyle();
+//			p.fill(0, 255, 0);
+//			p.stroke(0, 128, 0);
+//			TLNode.super.draw(dc);
+//		p.popStyle();
+//	}
 	public void attach1(TLTrack1 t) {
 		this.attach(t);
 		addToOutwardsInwards(t);

@@ -87,6 +87,12 @@ public class TLArc implements TLTrack1 {
 		return 0;
 	}
 
+	@Override
+	public void drawSelectionHalo(DrawContext dc) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 	
 

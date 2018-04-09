@@ -1,5 +1,9 @@
 package track.large;
 
+import main.Ap;
+import main.DrawContext;
+import main.Main;
+import track.PObjectClickable;
 import track.PObjectSelectable;
 
 /**
@@ -18,6 +22,11 @@ public interface TLTrack extends PObjectSelectable{
 		if(b().equals(n)) return a();
 		throw new IllegalArgumentException("That TLNode is not attached to this TLTrack "
 				+ "(perhaps you have 2 nodes in the same spot?)");
+	}
+	
+	public default void styleHalo(DrawContext dc) {
+		Main p = Ap.p();
+		p.stroke(255, 255, 0);
 	}
 	
 	

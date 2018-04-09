@@ -90,6 +90,20 @@ public class TLLine implements TAStraight{
 	public TLNode b() {
 		return to;
 	}
+	@Override
+	public void drawSelectionHalo(DrawContext dc) {
+		Main p = Ap.p();
+		p.pushStyle();
+		styleHalo(dc);
+		if(dc.scrollStage >= 2) {
+			p.strokeWeight(0.5F * dc.tc.db * 2);
+		} else {
+			p.strokeWeight(0.75F * dc.tc.db * 2);
+		}
+		util.Transform.linetf(p,from.x(), from.y(),to.x(), to.y(), dc.tc);
+		p.popStyle();
+		
+	}
 	
 	
 }

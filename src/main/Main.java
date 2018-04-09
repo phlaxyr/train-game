@@ -10,6 +10,7 @@ import static main.OriginMode.*;
 
 import processing.core.PApplet;
 import processing.event.MouseEvent;
+import track.PObjectSelectable;
 import track.TrackManager;
 
 import track.small.TSSegment;
@@ -49,13 +50,15 @@ public class Main extends PApplet {
 		point(fromMouseX, fromMouseY);
 		// tester.draw();
 		
-		
-		
+//		uid.draw();
+		pushStyle();
+		pushMatrix(); // so we can pop it and restore it to omode = DRAW_DEFAULT 
 		// the origin is at DRAW DEFAULT (UP LEFT CORNER)
 		
 		translate(centerX, centerY);
 		omode = DRAW_CENTER;
 		// the origin is at DRAW CENTERED
+		
 		
 		pushStyle();
 			rectMode(CENTER);
@@ -69,10 +72,12 @@ public class Main extends PApplet {
 		
 		translate(mOriginX, mOriginY);
 		omode = MAP_CENTER;
+
 	// the origin is at MAP CENTERED
 		//float db = (float)Math.pow(2, 0-scrollLen);
 		
 		DrawContext dc = drawContext();//new DrawContext(db,0-scrollLen);
+		stm.draw(dc);
 		float db = dc.tc.db;
 //		System.out.println("--DC--");
 //		System.out.println("db "+dc.db);
@@ -103,25 +108,12 @@ public class Main extends PApplet {
 		}
 		
 		
-		// how things are drawn:
-		// 1st, place the nodes at their locations
-		
-		// the nodes shall contain a `prevs` TLTrack[] for previous tracks
-		// and a `nexts` TLTrack[] for the next tracks
-		
-		// the `prevs` will contain every track whose nonself node is above
-		// `nexts` will contain every track whose nonself node is below
-		
-		// if the nonself node is the same y as the self node:
-			// if the nonself node is to the left of the self node then it's in `prev` 
-			// if the nonself node is to the right, it's in 'next`
-		
-		
-		// start at the leftest, uppermost node and work down (increase y)
-		// if there are nodes with the same y then work left to right (increase x)
-		
-
 		td.drawLargeTracks(dc);
+		
+		popStyle();
+		popMatrix();
+		omode = DRAW_DEFAULT;
+		uid.draw();
 		
 	}
 	public TransformContext transformContext() {
@@ -133,14 +125,20 @@ public class Main extends PApplet {
 		return new DrawContext(0-scrollLen, transformContext());
 	}
 	public TrackManager td = new TrackManager();
+
+	
 	float centerX;
 	float centerY;
 	
+	public UIDrawer uid;
+	
 	public void setup() {
 		
-		if(Ap.p() == null) System.out.println("nullapp");
+		if(Ap.p() == null) System.out.println("Ap.p() somehow is null");
 		
 		td.setupLarge();
+		uid = new UIDrawer();
+		
 		// seg = new TSSegment(new Pos(10, 10), new Pos(10,20));
 		// seg.setup(new DrawContext());
 		
@@ -158,6 +156,7 @@ public class Main extends PApplet {
 	
 	
 	public void mousePressed(MouseEvent e) {
+		uid.mousePressed(e.getX(), e.getY());
 		if(stage == WORLDMAP) {
 			
 			fromMouseX = mouseX;
@@ -175,6 +174,7 @@ public class Main extends PApplet {
 		}
 	}
 	public void mouseReleased() {
+		uid.mouseReleased();
 		if(stage == WORLDMAP) {
 			
 			translateX += tlateTempX;
@@ -198,6 +198,6 @@ public class Main extends PApplet {
 	}
 	public GameStage stage = WORLDMAP;
 	
-
+	public SelectToolManager stm = new SelectToolManager();
 
 }

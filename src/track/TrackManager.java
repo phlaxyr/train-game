@@ -9,13 +9,10 @@ import main.DrawContext;
 import main.LargeMap;
 import main.OriginMode;
 import processing.event.MouseEvent;
-import track.large.TLLine;
 import track.large.TLLine2;
 import track.large.TLNode;
+import track.large.TLStation;
 import track.large.TLTrack;
-import track.large.TLTrack1;
-import track.large.nodeFixed.TLNode1;
-import track.large.nodeFixed.TLNode2;
 import track.small.TSNode;
 
 
@@ -35,7 +32,7 @@ public class TrackManager {
 //			// since we draw nodes up to lower, we will not need to worry about an undrawn track above
 //		}
 		for(TLTrack track : largeTracks) {
-
+			
 			track.draw(dc);
 		}
 		for(TLNode node : largeNodes) {
@@ -84,18 +81,18 @@ public class TrackManager {
 	public TLNode getLargeNode(int index) {
 		return largeNodes.get(index);
 	}
-	public TLNode1 a, c, d;
-	public TLNode2 b;
+	public TLStation a, b, c, d;
+
 	public TLLine2 ab, bc;
 	/**
 	 * sets up large nodes and tracks
 	 */
 	public void setupLarge() {
-		a = register(new TLNode1(10,10));
-		b = register(new TLNode2(10,20));
+		a = register(new TLStation(10,10, "A"));
+		b = register(new TLStation(10,20, "B"));
 //		TLNode1 error = register(new TLNode1(10,10));
 //		TLNode1 error = register(new TLNode1(10,20));
-		c = register(new TLNode1(5, 25)); // should be ok
+		c = register(new TLStation(5, 25, "C")); // should be ok
 		
 		
 		
@@ -104,16 +101,23 @@ public class TrackManager {
 		
 	}
 	public void onMousePress(MouseEvent e) {
+		
+		
 		float mapx =  LargeMap.toMapX(Ap.p(),e.getX(), OriginMode.DRAW_DEFAULT);
 		float mapy =  LargeMap.toMapY(Ap.p(),e.getY(), OriginMode.DRAW_DEFAULT);
 		
 
-		List<PObjectSelectable> os = Arrays.asList(a, b, c, d, ab, bc);
+		List<PObjectSelectable> os = Arrays.asList(ab, bc, a, b, c, d);
 		for(PObjectSelectable o : os) {
 			if(o == null) {
 				continue;
 			}
-			System.out.println(o.getClass().getSimpleName() + " " + o.isWithinBounds(mapx, mapy, Ap.p().drawContext()));
+			if(o.isWithinBounds(mapx, mapy, Ap.p().drawContext())) {
+				System.out.println(o.getClass().getSimpleName());
+				if(Ap.p().stm.isSelectToolActive()) {
+					Ap.p().stm.select(o);
+				}
+			}
 		}
 		// recttf(this, mMouseX, mMouseY, 1, 1, dc.db);
 		

@@ -12,7 +12,8 @@ public interface TAStraight extends TLTrack1{
 	}
 	@Override
 	public default float tolerance(DrawContext dc) {
-		return dc.scrollStage / 3;
+
+		return 1.5F;
 	}
 
 	public default float dist2_line_pt(float vx, float vy, float wx, float wy, float px, float py) {

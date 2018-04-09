@@ -2,9 +2,8 @@ package track;
 
 import main.DrawContext;
 
-public interface PObjectSelectable extends PObject{
-
-	public boolean isWithinBounds(float x, float y, DrawContext dc);
-	public float tolerance(DrawContext dc);
-	
+public interface PObjectSelectable extends PObjectClickable{
+	public void drawSelectionHalo(DrawContext dc);
+	public default void onSelect(){}
+	public default void onDeselect(){}
 }

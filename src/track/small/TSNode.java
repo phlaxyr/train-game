@@ -37,5 +37,12 @@ public class TSNode implements ITSNode {
 	public float tolerance(DrawContext dc) {
 		return 0;
 	}
+
+
+	@Override
+	public void drawSelectionHalo(DrawContext dc) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

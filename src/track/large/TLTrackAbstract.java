@@ -1,7 +1,5 @@
 package track.large;
 
-import main.DrawContext;
-
 public abstract class TLTrackAbstract implements TLTrack{
 	TLNode a, b;
 	
