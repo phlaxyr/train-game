@@ -1,10 +1,13 @@
 package track.large;
 
+import track.PObjectRidable;
+import track.TRider;
+
 /**
  * connects a and b as an arrow
  *
  */
-public interface TLTrack1 extends TLTrack {
+public interface TLTrack1 extends TLTrack, PObjectRidable{
 	public default TLNode from() {
 		return a();
 	}
@@ -31,13 +34,16 @@ public interface TLTrack1 extends TLTrack {
 	 * Returns this for chaining.
 	 */
 	public default TLTrack1 autoAttach() {
-		a().attach(this);
-		b().attach(this);
+		a().attach1(this);
+		b().attach1(this);
 		return this;
 	}
 	
-
 	
-	
+	@Override
+	public default PObjectRidable onSurpass(TRider r) {
+		r.distst -= distance();
+		return to();
+	}
 	
 }

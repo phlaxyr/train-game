@@ -1,7 +1,6 @@
 package track;
 
 import main.DrawContext;
-import processing.core.PApplet;
 import track.large.TLTrack1;
 
 public interface TAStraight extends TLTrack1{
@@ -17,9 +16,17 @@ public interface TAStraight extends TLTrack1{
 		return 1.5F;
 	}
 
+	
+	
 	@Override
-	public default float distance() {
-		return PApplet.dist(a().x(), a().y(), b().x(), b().y());
+	public default Pos posAt(float distance) {
+		float percent = distance / distance();
+		if(!(0 < percent && percent < 1)) throw new IllegalArgumentException("distance not within track");
+		return new Pos(
+				from().x() + (to().x() - from().x()) * percent,
+				from().y() + (to().y() - from().y()) * percent
+				
+				);
 	}
 	
 	public default float dist2_line_pt(float vx, float vy, float wx, float wy, float px, float py) {

@@ -3,7 +3,6 @@ package track.large;
 import main.Ap;
 import main.DrawContext;
 import main.Main;
-import track.PObjectClickable;
 import track.PObjectSelectable;
 
 /**
@@ -29,8 +28,9 @@ public interface TLTrack extends PObjectSelectable{
 		p.stroke(255, 255, 0);
 	}
 	
+	
 	public float distance();
 	
 	
-	
+
 }

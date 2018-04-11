@@ -10,8 +10,8 @@ public interface TLTrack2 extends TLTrack{
 	public TLTrack1 ba();
 	
 	public default TLTrack2 autoAttach() {
-		a().attach(this);
-		b().attach(this);
+		a().attach2(this);
+		b().attach2(this);
 		return this;
 	}
 	

@@ -3,18 +3,20 @@ package track.large;
 import main.Ap;
 import main.DrawContext;
 import main.Main;
+import processing.core.PApplet;
 import track.TAStraight;
 
 public class TLLine implements TAStraight{
 	
 	public float dx, dy;
 	TLNode from, to;
+	public float dist;
 	public TLLine(TLNode from, TLNode to) {
 		this.from = from;
 		this.to= to;
 		dx = from.x() - to.x();
 		dy = from.y() - to.y();
-
+		dist = PApplet.dist(a().x(), a().y(), b().x(), b().y());
 		
 	}
 	@Override
@@ -103,6 +105,10 @@ public class TLLine implements TAStraight{
 		util.Transform.linetf(p,from.x(), from.y(),to.x(), to.y(), dc.tc);
 		p.popStyle();
 		
+	}
+	@Override
+	public float distance() {
+		return dist;
 	}
 	
 	

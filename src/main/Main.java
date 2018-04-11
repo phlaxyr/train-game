@@ -2,17 +2,20 @@ package main;
 
 
 import static main.GameStage.*;
-
-
+import static main.OriginMode.*;
 import static util.Transform.*;
 
-import static main.OriginMode.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import processing.core.PApplet;
 import processing.event.MouseEvent;
-import track.PObjectSelectable;
+import track.DijkstraManager;
+import track.TRider;
 import track.TrackManager;
-
+import track.large.TLNode;
+import track.large.TLTrack1;
 import track.small.TSSegment;
 import util.TransformContext;
 
@@ -110,6 +113,11 @@ public class Main extends PApplet {
 		
 		td.drawLargeTracks(dc);
 		
+		for(TRider r : riders) {
+			r.tick();
+			r.draw();
+		}
+		
 		popStyle();
 		popMatrix();
 		omode = DRAW_DEFAULT;
@@ -132,22 +140,33 @@ public class Main extends PApplet {
 	
 	public UIDrawer uid;
 	
+	public List<TRider> riders = new ArrayList<>();
+	
 	public void setup() {
 		
 		if(Ap.p() == null) System.out.println("Ap.p() somehow is null");
 		
 		td.setupLarge();
 		uid = new UIDrawer();
-		
+		TLNode origin = td.a;
+		dij.recalculate(origin);
+		List<TLTrack1> o = dij.getPathTracks(td.c);
+		System.out.println("DJPATH "+o);
+		riders.add(new TRider(o, td.a));
+		riders.get(0).v = 1;
 		// seg = new TSSegment(new Pos(10, 10), new Pos(10,20));
 		// seg.setup(new DrawContext());
 		
 
 		centerX = this.width/ 2;
 		centerY = this.height / 2;
+		System.out.println(Arrays.toString(td.largeNodes.toArray()));
+		System.out.println(Arrays.toString(td.largeTracks.toArray()));
+		
 	}
 	int drawOriginX, drawOriginY, mOriginX, mOriginY; // map origin x/y
-	int translateX, translateY, tlateTempX, tlateTempY, scrollLen, fromMouseX, fromMouseY; 
+	int translateX, translateY, tlateTempX, tlateTempY, fromMouseX, fromMouseY; 
+	int scrollLen = -2;
 	// to control the mouse grabbing
 	
 	
@@ -199,5 +218,5 @@ public class Main extends PApplet {
 	public GameStage stage = WORLDMAP;
 	
 	public SelectToolManager stm = new SelectToolManager();
-
+	public DijkstraManager dij = new DijkstraManager();
 }

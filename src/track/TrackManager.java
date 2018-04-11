@@ -71,6 +71,7 @@ public class TrackManager {
 	public <L extends TLTrack> L register(L track) {
 		
 		largeTracks.add(track);
+		
 		return track;
 	}
 	

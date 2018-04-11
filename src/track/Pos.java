@@ -1,9 +1,9 @@
 package track;
 
 public class Pos {
-	public int x, y;
-	public Pos(int x, int y) {
-		this.x = x;
-		this.y = y;
+	public float x, y;
+	public Pos(float f, float g) {
+		this.x = f;
+		this.y = g;
 	}
 }

@@ -4,6 +4,7 @@ import main.Ap;
 import main.DrawContext;
 import main.Main;
 import processing.core.PMatrix;
+import track.Pos;
 
 
 public class TLArc implements TLTrack1 {
@@ -97,6 +98,12 @@ public class TLArc implements TLTrack1 {
 	public float distance() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public Pos posAt(float distance) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

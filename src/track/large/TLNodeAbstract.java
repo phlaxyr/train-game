@@ -1,12 +1,9 @@
 package track.large;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
-import main.Ap;
 import main.DrawContext;
-import main.Main;
 
 
 /**

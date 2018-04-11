@@ -1,7 +1,6 @@
 package main;
 
-import static main.OriginMode.DRAW_DEFAULT;
-import static main.OriginMode.MAP_CENTER;
+import static main.OriginMode.*;
 
 public class LargeMap {
 	public static float toMapX(Main m, float x, OriginMode fromMode) {

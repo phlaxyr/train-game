@@ -2,9 +2,10 @@ package track.large;
 
 import main.DrawContext;
 
+
 /**
  * This is symmetric
- * @author carlw_000
+ * @author
  *
  */
 public class TLLine2 extends TLTrack2Abstract<TLLine>{
@@ -38,6 +39,8 @@ public class TLLine2 extends TLTrack2Abstract<TLLine>{
 	public float distance() {
 		return ab().distance();
 	}
+
+
 
 	
 }

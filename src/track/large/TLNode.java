@@ -6,10 +6,12 @@ import main.Ap;
 import main.DrawContext;
 import main.Main;
 import processing.core.PConstants;
-import track.PObjectClickable;
+import track.PObjectRidable;
 import track.PObjectSelectable;
+import track.Pos;
+import track.TRider;
 
-public interface TLNode extends PObjectSelectable{
+public interface TLNode extends PObjectRidable{
 	
 	
 	public float x();
@@ -105,5 +107,23 @@ public interface TLNode extends PObjectSelectable{
 	}
 	public default float radius() {
 		return 0.5F;
+	}
+	public default float distance() {
+		return 0;
+	}
+	public default Pos posAt(float distance) {
+		if(distance != distance()) throw new IllegalArgumentException("Tlnode distance must be 0");
+		return new Pos(x(), y());
+	}
+	@Override
+	public default PObjectRidable onSurpass(TRider r) {
+		if(r.isDestination(this)) {
+			r.a = 0;
+			r.v = 0;
+			r.distst = 0;
+			return this;
+		} else {
+			return r.iteratePath();
+		}
 	}
 }
