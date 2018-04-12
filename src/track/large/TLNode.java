@@ -115,10 +115,11 @@ public interface TLNode extends PObjectRidable{
 		if(distance != distance()) throw new IllegalArgumentException("Tlnode distance must be 0");
 		return new Pos(x(), y());
 	}
+
 	@Override
-	public default PObjectRidable exit(TRider r) {
+	public default PObjectRidable nextRidable(TRider r) {
 		if(r.isDestination(this)) return this;
-		return PObjectRidable.super.exit(r);
+		return PObjectRidable.super.nextRidable(r);
 	}
 	@Override
 	public default void enter(TRider r) {
@@ -128,6 +129,11 @@ public interface TLNode extends PObjectRidable{
 			r.v = 0;
 			r.distst = 0;
 		}
+	}
+	@Override
+	public default boolean shouldExit(TRider r) {
+		if(r.isDestination(this)) return false;
+		return true;
 	}
 	
 }

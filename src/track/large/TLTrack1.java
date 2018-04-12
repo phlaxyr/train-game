@@ -41,8 +41,7 @@ public interface TLTrack1 extends TLTrack, PObjectRidable{
 	
 	
 	@Override
-	public default PObjectRidable exit(TRider r) {
-		r.distst -= distance();
+	public default PObjectRidable nextRidable(TRider r) {
 		if(r.isDestination(to())) return to();
 		return r.iteratePath();
 	}

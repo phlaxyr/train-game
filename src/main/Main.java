@@ -151,7 +151,7 @@ public class Main extends PApplet {
 		TLNode origin = td.a;
 		dij.recalculate(origin);
 		List<TLTrack1> o = dij.getPathTracks(td.c);
-		System.out.println("DJPATH "+o);
+//		System.out.println("DJPATH "+o);
 		riders.add(new TRider(o, td.a));
 		riders.get(0).v = 1;
 		// seg = new TSSegment(new Pos(10, 10), new Pos(10,20));

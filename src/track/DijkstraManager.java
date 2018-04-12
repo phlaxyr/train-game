@@ -49,9 +49,9 @@ public class DijkstraManager {
             unSettledNodes.remove(closest);
             findMinimalDistances(closest);
             
-            System.out.println(Arrays.toString(settledNodes.toArray()));
-            System.out.println(Arrays.toString(unSettledNodes.toArray()));
-            System.out.println(Arrays.toString(predecessors.entrySet().toArray()));
+//            System.out.println(Arrays.toString(settledNodes.toArray()));
+//            System.out.println(Arrays.toString(unSettledNodes.toArray()));
+//            System.out.println(Arrays.toString(predecessors.entrySet().toArray()));
         }
     }
 

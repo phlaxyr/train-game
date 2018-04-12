@@ -114,7 +114,7 @@ public class TrackManager {
 				continue;
 			}
 			if(o.isWithinBounds(mapx, mapy, Ap.p().drawContext())) {
-				System.out.println(o.getClass().getSimpleName());
+				System.out.println(o.toString());
 				if(Ap.p().stm.isSelectToolActive()) {
 					Ap.p().stm.select(o);
 				}

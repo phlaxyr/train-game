@@ -45,7 +45,6 @@ public class Button implements PObjectClickable{
 		Util.println(x, y);
 		boolean withinBounds = isWithinBounds(x, y, dc);
 		isPressed = withinBounds ? !isPressed : isPressed; // if clicked, then toggle
-		System.out.println(isPressed);
 		return withinBounds;
 		
 	}

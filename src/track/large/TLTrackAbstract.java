@@ -17,6 +17,7 @@ public abstract class TLTrackAbstract implements TLTrack{
 	public TLNode b() {
 		return b;
 	}
-
-
+	public String toString() {
+		return this.getClass().getSimpleName() +"["+ a().toString() +","+ b().toString()+"]";
+	}
 }

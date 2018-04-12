@@ -20,5 +20,7 @@ public class TLStation extends TLMultiNode{
 		Ap.p().text(name, x() * dc.tc.db, y() * dc.tc.db);
 		Ap.p().popStyle();
 	}
-
+	public String toString() {
+		return this.getClass().getSimpleName() + ":" + name;
+	}
 }
