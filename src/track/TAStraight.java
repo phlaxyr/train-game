@@ -21,7 +21,7 @@ public interface TAStraight extends TLTrack1{
 	@Override
 	public default Pos posAt(float distance) {
 		float percent = distance / distance();
-		if(!(0 < percent && percent < 1)) throw new IllegalArgumentException("distance not within track");
+		if(!(0 <= percent && percent <= 1)) throw new IllegalArgumentException("distance not within track");
 		return new Pos(
 				from().x() + (to().x() - from().x()) * percent,
 				from().y() + (to().y() - from().y()) * percent

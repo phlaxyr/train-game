@@ -116,14 +116,18 @@ public interface TLNode extends PObjectRidable{
 		return new Pos(x(), y());
 	}
 	@Override
-	public default PObjectRidable onSurpass(TRider r) {
+	public default PObjectRidable exit(TRider r) {
+		if(r.isDestination(this)) return this;
+		return PObjectRidable.super.exit(r);
+	}
+	@Override
+	public default void enter(TRider r) {
 		if(r.isDestination(this)) {
+//			System.out.println("Destination reached!");
 			r.a = 0;
 			r.v = 0;
 			r.distst = 0;
-			return this;
-		} else {
-			return r.iteratePath();
 		}
 	}
+	
 }

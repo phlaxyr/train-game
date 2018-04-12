@@ -109,15 +109,20 @@ public class TRider {
 		// dist, velocity update
 		v += a;
 		distst += v;
-		System.out.println("distst "+distst);
+		System.out.print("distst "+distst+", ");
 
 		
 		if(distst >= con.distance()) { // exceeds the ctrack distance
 			// surpassed the node
-			con = con.onSurpass(this);
 			
+			con = con.exit(this);
+			con.enter(this);
 	
 		}
+		if(distst >= con.distance()) {
+			//idk
+		}
+		System.out.println(distst);
 		
 		
 		
