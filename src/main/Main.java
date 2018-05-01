@@ -1,9 +1,11 @@
 package main;
 
 
-import static main.GameStage.*;
-import static main.OriginMode.*;
-import static util.Transform.*;
+import static main.GameStage.WORLDMAP;
+import static main.OriginMode.DRAW_CENTER;
+import static main.OriginMode.DRAW_DEFAULT;
+import static main.OriginMode.MAP_CENTER;
+import static util.Transform.linetf;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +19,8 @@ import track.TrackManager;
 import track.large.TLNode;
 import track.large.TLTrack1;
 import track.small.TSSegment;
+import util.MapPos;
+import util.ScreenPos;
 import util.TransformContext;
 
 public class Main extends PApplet {
@@ -43,9 +47,17 @@ public class Main extends PApplet {
 
 
 	// Tester tester = new Tester();
-
+	public float trltx;
+	public float trlty;
+	public DrawContext currentDrawContext;
+	@Override
+	public void translate(float x, float y) {
+		super.translate(x, y);
+		trltx += x;
+		trlty += y;
+	}
 	public void draw() {
-
+		trltx = trlty = 0;
 		@SuppressWarnings("unused")
 		OriginMode omode = DRAW_DEFAULT;
 		background(255);
@@ -79,7 +91,15 @@ public class Main extends PApplet {
 	// the origin is at MAP CENTERED
 		//float db = (float)Math.pow(2, 0-scrollLen);
 		
-		DrawContext dc = drawContext();//new DrawContext(db,0-scrollLen);
+		DrawContext dc;//new DrawContext(db,0-scrollLen);
+		currentDrawContext = dc = new DrawContext(
+				0-scrollLen, 
+				new TransformContext(
+						(float)Math.pow(2, 0-scrollLen),
+						trltx,trlty),
+				mouseX,mouseY
+		);
+		
 		stm.draw(dc);
 		float db = dc.tc.db;
 //		System.out.println("--DC--");
@@ -122,15 +142,24 @@ public class Main extends PApplet {
 		popMatrix();
 		omode = DRAW_DEFAULT;
 		uid.draw();
+
+//		currentDrawContext = new DrawContext(
+//				0-scrollLen, 
+//				new TransformContext(
+//						(float)Math.pow(2, 0-scrollLen),
+//						trltx,trlty),
+//				mouseX,mouseY
+//		);
 		
 	}
+	
 	public TransformContext transformContext() {
-		float db = (float)Math.pow(2, 0-scrollLen);
 		
-		return  new TransformContext(db);//,0-scrollLen);
+		
+		return drawContext().tc;//,0-scrollLen);
 	}
 	public DrawContext drawContext() {
-		return new DrawContext(0-scrollLen, transformContext());
+		return currentDrawContext;
 	}
 	public TrackManager td = new TrackManager();
 
@@ -138,7 +167,7 @@ public class Main extends PApplet {
 	float centerX;
 	float centerY;
 	
-	public UIDrawer uid;
+	public UIManager uid;
 	
 	public List<TRider> riders = new ArrayList<>();
 	
@@ -147,7 +176,7 @@ public class Main extends PApplet {
 		if(Ap.p() == null) System.out.println("Ap.p() somehow is null");
 		
 		td.setupLarge();
-		uid = new UIDrawer();
+		uid = new UIManager();
 		TLNode origin = td.a;
 		dij.recalculate(origin);
 		List<TLTrack1> o = dij.getPathTracks(td.c);
@@ -176,13 +205,15 @@ public class Main extends PApplet {
 	
 	public void mousePressed(MouseEvent e) {
 		uid.mousePressed(e.getX(), e.getY());
-		if(stage == WORLDMAP) {
-			
-			fromMouseX = mouseX;
-			fromMouseY = mouseY;
-			
-			td.onMousePress(e);
-		}
+		
+		DrawContext dc = drawContext();
+		MapPos mp = dc.tc.mouseToMap(new ScreenPos(e.getX(), e.getY()));
+		fromMouseX = mouseX;
+		fromMouseY = mouseY;
+		
+		boolean pressed = td.onMousePress(e);
+		
+		stm.onMousePress(pressed, mp, dc);
 	}
 	public void mouseDragged(MouseEvent e) {
 		if(stage == WORLDMAP) {
@@ -217,6 +248,6 @@ public class Main extends PApplet {
 	}
 	public GameStage stage = WORLDMAP;
 	
-	public SelectToolManager stm = new SelectToolManager();
+	public ToolManager stm = new ToolManager();
 	public DijkstraManager dij = new DijkstraManager();
 }

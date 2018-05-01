@@ -1,13 +1,13 @@
 package track.large;
 
-import track.PObjectRidable;
+import track.PRideable;
 import track.TRider;
 
 /**
  * connects a and b as an arrow
  *
  */
-public interface TLTrack1 extends TLTrack, PObjectRidable{
+public interface TLTrack1 extends TLTrack, PRideable{
 	public default TLNode from() {
 		return a();
 	}
@@ -41,7 +41,7 @@ public interface TLTrack1 extends TLTrack, PObjectRidable{
 	
 	
 	@Override
-	public default PObjectRidable nextRidable(TRider r) {
+	public default PRideable nextRidable(TRider r) {
 		if(r.isDestination(to())) return to();
 		return r.iteratePath();
 	}

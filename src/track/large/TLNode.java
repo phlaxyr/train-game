@@ -6,12 +6,11 @@ import main.Ap;
 import main.DrawContext;
 import main.Main;
 import processing.core.PConstants;
-import track.PObjectRidable;
-import track.PObjectSelectable;
-import track.Pos;
+import track.PRideable;
 import track.TRider;
+import util.MapPos;
 
-public interface TLNode extends PObjectRidable{
+public interface TLNode extends PRideable{
 	
 	
 	public float x();
@@ -111,15 +110,15 @@ public interface TLNode extends PObjectRidable{
 	public default float distance() {
 		return 0;
 	}
-	public default Pos posAt(float distance) {
+	public default MapPos posAt(float distance) {
 		if(distance != distance()) throw new IllegalArgumentException("Tlnode distance must be 0");
-		return new Pos(x(), y());
+		return new MapPos(x(), y());
 	}
 
 	@Override
-	public default PObjectRidable nextRidable(TRider r) {
+	public default PRideable nextRidable(TRider r) {
 		if(r.isDestination(this)) return this;
-		return PObjectRidable.super.nextRidable(r);
+		return PRideable.super.nextRidable(r);
 	}
 	@Override
 	public default void enter(TRider r) {

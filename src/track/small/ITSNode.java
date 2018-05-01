@@ -1,8 +1,8 @@
 package track.small;
 
-import track.PObjectSelectable;
+import track.PSelectable;
 import track.large.TLNode;
 
-public interface ITSNode extends PObjectSelectable{
+public interface ITSNode extends PSelectable{
 	public TLNode largeNode();
 }

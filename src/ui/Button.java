@@ -3,30 +3,32 @@ package ui;
 import main.Ap;
 import main.DrawContext;
 import main.Main;
-import main.UIDrawer;
+import main.UIManager;
 import processing.core.PConstants;
-import track.PObjectClickable;
+import track.PClickable;
 import util.Util;
 
-public class Button implements PObjectClickable{
+public class Button implements PClickable{
 	
 	float x, y, a, b, cx, cy;
 	float uplx, uply, downrx, downry; // up left and down right
 	String text;
 	int rmode;
-	public UIDrawer ud;
+	public UIManager ud;
 	boolean isPressed;
 	
-	public Button(UIDrawer ud) {
+	public Button(UIManager ud) {
 		this.ud = ud;
+	}
+	public void setPressed(boolean tf) {
+		isPressed = tf;
 	}
 	
 	public void setPressed() {
-		isPressed = true;
+		setPressed(true);
 	}
 	public void setUnpressed() {
-		isPressed = false;
-		Ap.p().stm.select(null);
+		setPressed(false);
 	}
 	
 	public boolean isPressed() {
@@ -39,15 +41,23 @@ public class Button implements PObjectClickable{
 	 * @param y
 	 * @param dc
 	 * @return
-	 * Is withinBounds
+	 * Was this button clicked
 	 */
-	public boolean onMousePress(int x, int y, DrawContext dc) {
+	public boolean buttonClicked(int x, int y, DrawContext dc) {
 		Util.println(x, y);
 		boolean withinBounds = isWithinBounds(x, y, dc);
 		isPressed = withinBounds ? !isPressed : isPressed; // if clicked, then toggle
 		return withinBounds;
 		
 	}
+	
+	/**
+	 * 
+	 */
+	public void onMouseClick() {
+		
+	}
+	
 	public void mouseReleased() {
 //		isPressed = false;
 	}

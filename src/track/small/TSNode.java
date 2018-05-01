@@ -1,7 +1,6 @@
 package track.small;
 
 import main.DrawContext;
-import track.Pos;
 import track.large.TLNode;
 
 public class TSNode implements ITSNode {
