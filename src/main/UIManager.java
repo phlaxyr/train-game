@@ -1,25 +1,40 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import processing.core.PConstants;
 import ui.Button;
 import util.TransformContext;
 
-public class UIDrawer {
-	public final DrawContext flatdc = new DrawContext(0, new TransformContext(1));
+public class UIManager {
+	public final DrawContext flatdc = new DrawContext(0, new TransformContext(1, 0, 0), 0, 0);
 	public Button nodeCreate;
-	public Button selectTool;
+	public Button select;
 	public Button activeTool;
+	public List<Button> tools = new ArrayList<>();
 	{
 		Ap.p().rectMode(PConstants.CORNER);
-		nodeCreate = new Button(0, 400, 100, 50, "Create Tool");
-		selectTool = new Button(100, 400, 100, 50, "Select Tool");
+		nodeCreate = new Button(0, 400, 100, 50, "Create Node");
+		select = new Button(100, 400, 100, 50, "Select Tool") {
+			@Override
+			public void setUnpressed() {
+				super.setUnpressed();
+				Ap.p().stm.select(null);
+			}
+		};
+		tools.add(nodeCreate);
+		tools.add(select);
 	}
 	public void draw( ){
 		Ap.p().pushStyle();
 
 		Ap.p().fill(255);
-		nodeCreate.draw(flatdc);
-		selectTool.draw(flatdc);
+//		nodeCreate.draw(flatdc);
+//		select.draw(flatdc);
+		for(Button b : tools) {
+			b.draw(flatdc);
+		}
 		Ap.p().popStyle();
 	}
 	
@@ -35,22 +50,36 @@ public class UIDrawer {
 //		Util.println(x, y);
 //		System.out.println(nodeCreate.isWithinBounds(x, y, flatdc));
 //		isPressed = true;
-		if(nodeCreate.onMousePress(x, y, flatdc)) {
+//		if(nodeCreate.onMousePress(x, y, flatdc)) {
+//			
+//			activeTool = nodeCreate;
+//			
+//			select.setUnpressed();
+//		} else if(select.onMousePress(x, y, flatdc)) {
+//			
+//			activeTool = select;
+//			
+//			nodeCreate.setUnpressed();
+//		}
+		for(Button b : tools) {
+			boolean wasPressed = b.isPressed();
+			if(b.buttonClicked(x, y, flatdc)) { 
+				
+				activeTool = wasPressed ? null : b;
+				break;
+			}
 			
-			activeTool = nodeCreate;
-			
-			selectTool.setUnpressed();
-		} else if(selectTool.onMousePress(x, y, flatdc)) {
-			
-			activeTool = selectTool;
-			
-			nodeCreate.setUnpressed();
+		}
+		for(Button b : tools) {
+			if(b.equals(activeTool)) continue;
+			b.setUnpressed();
 		}
 		
 	}
 	public void mouseReleased() {
-		nodeCreate.mouseReleased();
-		selectTool.mouseReleased();
+//		nodeCreate.mouseReleased();
+//		select.mouseReleased();
+		for(Button b : tools) b.mouseReleased();
 	}
 	
 //	/**

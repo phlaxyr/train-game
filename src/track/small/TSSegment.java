@@ -4,14 +4,14 @@ import main.Ap;
 import main.Main;
 import processing.core.PApplet;
 import render.Element;
-import track.Pos;
+import util.MapPos;
 import util.TransformContext;
 
 public class TSSegment extends Element{
 	
-	public Pos start, end;
+	public MapPos start, end;
 	// PImage img; 
-	public TSSegment(Pos start, Pos end) {
+	public TSSegment(MapPos start, MapPos end) {
 		this.start = start;
 		this.end = end;
 	}

@@ -7,6 +7,7 @@ import main.Ap;
 import track.large.TLNode;
 import track.large.TLTrack;
 import track.large.TLTrack1;
+import util.MapPos;
 
 public class TRider {
 	public TLNode finaldest;
@@ -16,7 +17,7 @@ public class TRider {
 	
 	int index = 0;
 	
-	public PObjectRidable con;
+	public PRideable con;
 	
 	/**
 	 * Sub track distance
@@ -26,7 +27,7 @@ public class TRider {
 	
 	
 	
-	public TRider(List<TLTrack1> path, PObjectRidable con) {
+	public TRider(List<TLTrack1> path, PRideable con) {
 		
 		setPath(path);
 //		updateDest();
@@ -35,7 +36,7 @@ public class TRider {
 		index = 0;
 	}
 
-	public PObjectRidable iteratePath() {
+	public PRideable iteratePath() {
 		if(path == null) System.out.println("Null path");
 		return path.get(index++);
 	}
@@ -126,7 +127,7 @@ public class TRider {
 		
 	}
 	public void draw() {
-		Pos p = con.posAt(distst);
+		MapPos p = con.posAt(distst);
 		Ap.p().fill(128, 128, 0);
 		util.Transform.circletf(Ap.p(), p.x, p.y, 2F, 2F, Ap.p().transformContext());
 	}

@@ -8,6 +8,7 @@ import main.Ap;
 import main.DrawContext;
 import main.LargeMap;
 import main.OriginMode;
+import main.ToolManager;
 import processing.event.MouseEvent;
 import track.large.TLLine2;
 import track.large.TLNode;
@@ -43,28 +44,39 @@ public class TrackManager {
 	public List<TLNode> largeNodes = new ArrayList<>();
 	public List<TLTrack> largeTracks = new ArrayList<>();
 	
+//	/**
+//	 * Must be registered in order
+//	 * high to low
+//	 * @param node
+//	 * 
+//	 * @return
+//	 * returns the in node for chaining
+//	 */
+//	public <L extends TLNode> L registerOrdered(L node) {
+//
+//
+//		// size check
+//		int s = largeNodes.size();
+//		if(s != 0) {
+//			TLNode before = largeNodes.get(s - 1);
+//			if(before.isLowerThan(node)) {
+//				throw new IllegalArgumentException("registerTLNode did not place it in order!");
+//			}
+//		}
+//		largeNodes.add(node);
+//		return node;
+//		
+//		
+//	}
+	
 	/**
-	 * Must be registered in order
-	 * high to low
+	 * IDK
 	 * @param node
-	 * 
 	 * @return
-	 * returns the in node for chaining
 	 */
 	public <L extends TLNode> L register(L node) {
-
-
-		// size check
-		int s = largeNodes.size();
-		if(s != 0) {
-			TLNode before = largeNodes.get(s - 1);
-			if(before.isLowerThan(node)) {
-				throw new IllegalArgumentException("registerTLNode did not place it in order!");
-			}
-		}
 		largeNodes.add(node);
 		return node;
-		
 		
 	}
 	
@@ -101,25 +113,36 @@ public class TrackManager {
 		bc = register((TLLine2) new TLLine2(b, c).autoAttach());
 		
 	}
-	public void onMousePress(MouseEvent e) {
+	/**
+	 * 
+	 * @param e
+	 * @return
+	 * whether a track has been clicked
+	 */
+	public boolean onMousePress(MouseEvent e) {
 		
 		
 		float mapx =  LargeMap.toMapX(Ap.p(),e.getX(), OriginMode.DRAW_DEFAULT);
 		float mapy =  LargeMap.toMapY(Ap.p(),e.getY(), OriginMode.DRAW_DEFAULT);
 		
 
-		List<PObjectSelectable> os = Arrays.asList(ab, bc, a, b, c, d);
-		for(PObjectSelectable o : os) {
+		List<PSelectable> os = Arrays.asList(ab, bc, a, b, c, d);
+		boolean ret = false;;
+		for(PSelectable o : os) {
 			if(o == null) {
 				continue;
 			}
 			if(o.isWithinBounds(mapx, mapy, Ap.p().drawContext())) {
 				System.out.println(o.toString());
-				if(Ap.p().stm.isSelectToolActive()) {
-					Ap.p().stm.select(o);
-				}
+				Ap.p().stm.onClicked(o);
+//				if(Ap.p().stm.isSelectToolActive()) {
+//					Ap.p().stm.select(o);
+//				}
+				ret = true;
 			}
+			
 		}
+		return ret;
 		// recttf(this, mMouseX, mMouseY, 1, 1, dc.db);
 		
 

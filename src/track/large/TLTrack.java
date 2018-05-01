@@ -3,14 +3,14 @@ package track.large;
 import main.Ap;
 import main.DrawContext;
 import main.Main;
-import track.PObjectSelectable;
+import track.PSelectable;
 
 /**
  * Connects a and b
  * 
  *
  */
-public interface TLTrack extends PObjectSelectable{
+public interface TLTrack extends PSelectable{
 	public TLNode a();
 	public TLNode b();
 	

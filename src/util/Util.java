@@ -1,6 +1,13 @@
 package util;
 
 public class Util {
+	/**
+	 * Inclusive
+	 * @param in
+	 * @param min
+	 * @param max
+	 * @return
+	 */
 	public static float constrain(float in, float min, float max) {
 		
 		    return (in > max) ? max : (in < min ? min:in );

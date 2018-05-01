@@ -12,7 +12,7 @@ import main.DrawContext;
  *
  */
 public abstract class TLNodeAbstract implements TLNode{
-	private float pvx, pvy;
+	protected float pvx, pvy;
 	protected List<TLTrack> higher = new ArrayList<>();
 	protected List<TLTrack> lower = new ArrayList<>();
 	protected List<TLTrack1> outwards = new ArrayList<>();
@@ -38,6 +38,8 @@ public abstract class TLNodeAbstract implements TLNode{
 	public float y() {
 		return pvy;
 	}
+	
+	
 	protected void addToHigherLower(TLTrack t) {
 		if(t.otherNode(this).isHigherThan(this)) {
 			higher.add(t);
